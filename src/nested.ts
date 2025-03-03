@@ -16,7 +16,7 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
  * `expected`, and an empty array for its `options`.
  */
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
-    return [];
+    return questions.filter((ques: Question): boolean => ques.body !== "" && ques.expected !== "");
 }
 
 /***
@@ -27,7 +27,10 @@ export function findQuestion(
     questions: Question[],
     id: number
 ): Question | null {
-    return null;
+    let arr = questions.filter((ques: Question): boolean => ques.id === id);
+
+    let ques: Question = (arr.length === 1) ? {...[...arr]} : null;
+    return ques;
 }
 
 /**
@@ -35,7 +38,7 @@ export function findQuestion(
  * with the given `id`.
  */
 export function removeQuestion(questions: Question[], id: number): Question[] {
-    return [];
+    return questions.filter((ques: Question): boolean => ques.id !== id);
 }
 
 /***
