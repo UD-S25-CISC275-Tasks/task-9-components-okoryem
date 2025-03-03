@@ -19,13 +19,11 @@ export function getNonEmptyQuestions(questions: Question[]): Question[] {
     let arr = questions.map(
         (ques: Question): Question => ({ ...ques, options: [...ques.options] }),
     );
-    return arr.filter(
-        (ques) =>
-            (ques.body !== "" &&
-                ques.expected !== "" &&
-                ques.type === "short_answer_question") ||
-            ques.options.length !== 0,
-    );
+    return arr.filter((ques) => 
+        (ques.type === "short_answer_question"
+            && (ques.body !== "" || ques.expected !== "")
+            || (ques.type === "multiple_choice_question" && ques.options.length !== 0)
+    ));
 }
 
 /***
