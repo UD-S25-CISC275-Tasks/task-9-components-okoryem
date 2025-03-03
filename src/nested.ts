@@ -36,10 +36,7 @@ export function findQuestion(
     questions: Question[],
     id: number,
 ): Question | null {
-    let arr = questions.filter((ques: Question): boolean => ques.id === id);
-
-    let ques: Question = arr.length === 1 ? { ...[...arr] } : null;
-    return ques;
+    return questions.find((ques: Question): boolean => ques.id === id) || null;
 }
 
 /**
