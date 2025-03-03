@@ -16,7 +16,8 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
  * `expected`, and an empty array for its `options`.
  */
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
-    return questions.filter((ques: Question): boolean => ques.body !== "" && ques.expected !== "");
+    let arr = questions.map((ques: Question): Question => ({...ques, options: [...ques.options]}));
+    return arr.filter((ques => ques.body !== "" && ques.expected !== "" && (ques.type === "short_answer_question") || ques.options.length !== 0));
 }
 
 /***
@@ -60,7 +61,7 @@ export function sumPoints(questions: Question[]): number {
  * Consumes an array of questions and returns the sum total of the PUBLISHED questions.
  */
 export function sumPublishedPoints(questions: Question[]): number {
-    return 0;
+    return questions.filter((ques: Question): boolean => ques.published).map((ques: Question): number => ques.points).reduce((acc, num) => acc + num, 0);
 }
 
 /***
