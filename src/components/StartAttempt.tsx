@@ -22,7 +22,7 @@ export function StartAttempt(): React.JSX.Element {
                 Start Quiz
             </Button>
             <Button
-                onClick={() => changeProgress(false)}
+                onClick={() => {changeProgress(false);}}
                 disabled={!inProgress}
             >
                 Stop Quiz

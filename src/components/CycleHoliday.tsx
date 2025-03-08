@@ -36,10 +36,10 @@ export function CycleHoliday(): React.JSX.Element {
 
     return (
         <div>
-            <Button onClick={() => changeHoliday(ALPHA_HOLI[holiday])}>
+            <Button onClick={() => {changeHoliday(ALPHA_HOLI[holiday]); }}>
                 Advance by Alphabet
             </Button>
-            <Button onClick={() => changeHoliday(NEXT_HOLI[holiday])}>
+            <Button onClick={() => {changeHoliday(NEXT_HOLI[holiday]); }}>
                 Advance by Year
             </Button>
             <span>{`Holiday: ${EMOJI[holiday]}`}</span>
