@@ -17,20 +17,28 @@ export function TwoDice(): React.JSX.Element {
 
     return (
         <div>
-            <Button onClick={() => setVal1(d6())}>Roll Left</Button>
+            <Button
+                onClick={() => {
+                    setVal1(d6());
+                }}
+            >
+                Roll Left
+            </Button>
             <span data-testid="left-die">{val1}</span>
-            <Button onClick={() => setVal2(d6())}>Roll Right</Button>
+            <Button
+                onClick={() => {
+                    setVal2(d6());
+                }}
+            >
+                Roll Right
+            </Button>
             <span data-testid="right-die">{val2}</span>
             <div>
-                {val1 === val2 ? (
-                    val1 === 1 ? (
+                {val1 === val2 ?
+                    val1 === 1 ?
                         <span>Lose</span>
-                    ) : (
-                        <span>Win</span>
-                    )
-                ) : (
-                    <span></span>
-                )}
+                    :   <span>Win</span>
+                :   <span></span>}
             </div>
         </div>
     );
