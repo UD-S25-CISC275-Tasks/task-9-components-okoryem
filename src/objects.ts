@@ -8,7 +8,7 @@ import { Question, QuestionType } from "./interfaces/question";
 export function makeBlankQuestion(
     id: number,
     name: string,
-    type: QuestionType
+    type: QuestionType,
 ): Question {
     return {
         id: id,
@@ -18,7 +18,7 @@ export function makeBlankQuestion(
         expected: "",
         options: [],
         points: 1,
-        published: false
+        published: false,
     };
 }
 
@@ -42,9 +42,9 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    return question.options.length === 0
-        ? true
-        : question.options.includes(answer);
+    return question.options.length === 0 ?
+            true
+        :   question.options.includes(answer);
 }
 
 /**
@@ -75,14 +75,14 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return question.options.length === 0
-        ? "# " + question.name + "\n" + question.body
-        : "# " +
-              question.name +
-              "\n" +
-              question.body +
-              "\n" +
-              question.options.map((option) => `- ${option}`).join("\n");
+    return question.options.length === 0 ?
+            "# " + question.name + "\n" + question.body
+        :   "# " +
+                question.name +
+                "\n" +
+                question.body +
+                "\n" +
+                question.options.map((option) => `- ${option}`).join("\n");
 }
 
 /**
@@ -113,7 +113,7 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
         ...oldQuestion,
         name: `Copy of ${oldQuestion.name}`,
         id: id,
-        published: false
+        published: false,
     };
 }
 
@@ -140,7 +140,7 @@ export function mergeQuestion(
     id: number,
     name: string,
     contentQuestion: Question,
-    { points }: { points: number }
+    { points }: { points: number },
 ): Question {
     return {
         id: id,
@@ -150,6 +150,6 @@ export function mergeQuestion(
         options: [...contentQuestion.options],
         type: contentQuestion.type,
         published: false,
-        points: points
+        points: points,
     };
 }

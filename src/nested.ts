@@ -17,14 +17,14 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
  */
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
     let arr = questions.map(
-        (ques: Question): Question => ({ ...ques, options: [...ques.options] })
+        (ques: Question): Question => ({ ...ques, options: [...ques.options] }),
     );
     return arr.filter(
         (ques) =>
             (ques.type === "short_answer_question" &&
                 (ques.body !== "" || ques.expected !== "")) ||
             (ques.type === "multiple_choice_question" &&
-                ques.options.length !== 0)
+                ques.options.length !== 0),
     );
 }
 
@@ -34,7 +34,7 @@ export function getNonEmptyQuestions(questions: Question[]): Question[] {
  */
 export function findQuestion(
     questions: Question[],
-    id: number
+    id: number,
 ): Question | null {
     return questions.find((ques: Question): boolean => ques.id === id) || null;
 }
@@ -95,7 +95,7 @@ export function toCSV(questions: Question[]): string {
     let quesCSV = questions
         .map(
             (ques: Question): string =>
-                `${ques.id},${ques.name},${ques.options.length},${ques.points},${ques.published}`
+                `${ques.id},${ques.name},${ques.options.length},${ques.points},${ques.published}`,
         )
         .join("\n");
     return "id,name,options,points,published\n" + quesCSV;
@@ -112,8 +112,8 @@ export function makeAnswers(questions: Question[]): Answer[] {
             questionId: ques.id,
             text: "",
             submitted: false,
-            correct: false
-        })
+            correct: false,
+        }),
     );
 }
 
@@ -126,8 +126,8 @@ export function publishAll(questions: Question[]): Question[] {
         (ques: Question): Question => ({
             ...ques,
             options: [...ques.options],
-            published: true
-        })
+            published: true,
+        }),
     );
 }
 
@@ -137,7 +137,7 @@ export function publishAll(questions: Question[]): Question[] {
  */
 export function sameType(questions: Question[]): boolean {
     let arr = questions.filter(
-        (ques) => ques.type === "multiple_choice_question"
+        (ques) => ques.type === "multiple_choice_question",
     );
     return arr.length === questions.length || arr.length == 0;
 }
@@ -151,10 +151,10 @@ export function addNewQuestion(
     questions: Question[],
     id: number,
     name: string,
-    type: QuestionType
+    type: QuestionType,
 ): Question[] {
     let arr = questions.map(
-        (ques: Question): Question => ({ ...ques, options: [...ques.options] })
+        (ques: Question): Question => ({ ...ques, options: [...ques.options] }),
     );
     return [...arr, makeBlankQuestion(id, name, type)];
 }
@@ -167,13 +167,13 @@ export function addNewQuestion(
 export function renameQuestionById(
     questions: Question[],
     targetId: number,
-    newName: string
+    newName: string,
 ): Question[] {
     return questions.map(
         (ques: Question): Question =>
-            ques.id !== targetId
-                ? { ...ques, options: [...ques.options] }
-                : { ...ques, options: [...ques.options], name: newName }
+            ques.id !== targetId ?
+                { ...ques, options: [...ques.options] }
+            :   { ...ques, options: [...ques.options], name: newName },
     );
 }
 
@@ -187,19 +187,18 @@ export function renameQuestionById(
 export function changeQuestionTypeById(
     questions: Question[],
     targetId: number,
-    newQuestionType: QuestionType
+    newQuestionType: QuestionType,
 ): Question[] {
     return questions.map(
         (ques: Question): Question =>
-            ques.id !== targetId
-                ? { ...ques, options: [...ques.options] }
-                : newQuestionType === "multiple_choice_question"
-                  ? {
-                        ...ques,
-                        options: [...ques.options],
-                        type: newQuestionType
-                    }
-                  : { ...ques, options: [], type: newQuestionType }
+            ques.id !== targetId ? { ...ques, options: [...ques.options] }
+            : newQuestionType === "multiple_choice_question" ?
+                {
+                    ...ques,
+                    options: [...ques.options],
+                    type: newQuestionType,
+                }
+            :   { ...ques, options: [], type: newQuestionType },
     );
 }
 
@@ -217,22 +216,21 @@ export function editOption(
     questions: Question[],
     targetId: number,
     targetOptionIndex: number,
-    newOption: string
+    newOption: string,
 ): Question[] {
     return questions.map(
         (ques: Question): Question =>
-            ques.id !== targetId
-                ? { ...ques, options: [...ques.options] }
-                : targetOptionIndex === -1
-                  ? { ...ques, options: [...ques.options, newOption] }
-                  : {
-                        ...ques,
-                        options: [
-                            ...ques.options.slice(0, targetOptionIndex),
-                            newOption,
-                            ...ques.options.slice(targetOptionIndex + 1)
-                        ]
-                    }
+            ques.id !== targetId ? { ...ques, options: [...ques.options] }
+            : targetOptionIndex === -1 ?
+                { ...ques, options: [...ques.options, newOption] }
+            :   {
+                    ...ques,
+                    options: [
+                        ...ques.options.slice(0, targetOptionIndex),
+                        newOption,
+                        ...ques.options.slice(targetOptionIndex + 1),
+                    ],
+                },
     );
 }
 
@@ -246,17 +244,17 @@ export function editOption(
 export function duplicateQuestionInArray(
     questions: Question[],
     targetId: number,
-    newId: number
+    newId: number,
 ): Question[] {
     return questions.reduce(
         (acc: Question[], ques: Question) =>
-            ques.id !== targetId
-                ? [...acc, { ...ques, options: [...ques.options] }]
-                : [
-                      ...acc,
-                      { ...ques, options: [...ques.options] },
-                      duplicateQuestion(newId, ques)
-                  ],
-        []
+            ques.id !== targetId ?
+                [...acc, { ...ques, options: [...ques.options] }]
+            :   [
+                    ...acc,
+                    { ...ques, options: [...ques.options] },
+                    duplicateQuestion(newId, ques),
+                ],
+        [],
     );
 }
